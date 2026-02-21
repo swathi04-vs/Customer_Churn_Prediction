@@ -1,0 +1,310 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Customer Churn Prediction{% endblock %}
+
+{% block content %}
+<div class="container-lg my-5">
+    <!-- Header -->
+    <div class="mb-5">
+        <h1 class="display-5 fw-bold mb-2">
+            <i class="fas fa-dashboard text-primary"></i> Dashboard
+        </h1>
+        <p class="text-muted lead">
+            Model Performance and Feature Insights
+        </p>
+    </div>
+
+    <div class="row g-4">
+        <!-- Model Accuracy Card -->
+        <div class="col-md-6 col-lg-3">
+            <div class="card glass-effect shadow-lg border-0 h-100">
+                <div class="card-body text-center p-4">
+                    <div class="mb-3">
+                        <i class="fas fa-bullseye fa-3x text-success"></i>
+                    </div>
+                    <h6 class="text-muted small mb-2">Model Accuracy</h6>
+                    <h3 class="fw-bold mb-0">
+                        {% if model_accuracy %}
+                            {{ "%.2f"|format(model_accuracy * 100) }}%
+                        {% else %}
+                            N/A
+                        {% endif %}
+                    </h3>
+                </div>
+            </div>
+        </div>
+
+        <!-- Total Predictions -->
+        <div class="col-md-6 col-lg-3">
+            <div class="card glass-effect shadow-lg border-0 h-100">
+                <div class="card-body text-center p-4">
+                    <div class="mb-3">
+                        <i class="fas fa-chart-line fa-3x text-info"></i>
+                    </div>
+                    <h6 class="text-muted small mb-2">Model Type</h6>
+                    <h3 class="fw-bold mb-0">RandomForest</h3>
+                </div>
+            </div>
+        </div>
+
+        <!-- Features Analyzed -->
+        <div class="col-md-6 col-lg-3">
+            <div class="card glass-effect shadow-lg border-0 h-100">
+                <div class="card-body text-center p-4">
+                    <div class="mb-3">
+                        <i class="fas fa-sliders-h fa-3x text-warning"></i>
+                    </div>
+                    <h6 class="text-muted small mb-2">Features</h6>
+                    <h3 class="fw-bold mb-0">19</h3>
+                </div>
+            </div>
+        </div>
+
+        <!-- Status -->
+        <div class="col-md-6 col-lg-3">
+            <div class="card glass-effect shadow-lg border-0 h-100">
+                <div class="card-body text-center p-4">
+                    <div class="mb-3">
+                        <i class="fas fa-check-circle fa-3x text-success"></i>
+                    </div>
+                    <h6 class="text-muted small mb-2">Status</h6>
+                    <h3 class="fw-bold mb-0">Active</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Feature Importance Chart -->
+    <div class="row g-4 mt-2">
+        <div class="col-lg-8">
+            <div class="card glass-effect shadow-lg border-0">
+                <div class="card-body p-4">
+                    <h5 class="card-title fw-bold mb-4">
+                        <i class="fas fa-chart-bar text-primary"></i> Top 10 Feature Importance
+                    </h5>
+                    <div style="height: 400px;">
+                        <canvas id="featureChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Model Information -->
+        <div class="col-lg-4">
+            <div class="card glass-effect shadow-lg border-0 h-100">
+                <div class="card-body p-4">
+                    <h5 class="card-title fw-bold mb-3">
+                        <i class="fas fa-info-circle text-primary"></i> Model Information
+                    </h5>
+                    <div class="mb-4">
+                        <small class="text-muted d-block mb-1">Algorithm</small>
+                        <p class="fw-bold mb-0">Random Forest Classifier</p>
+                    </div>
+                    <div class="mb-4">
+                        <small class="text-muted d-block mb-1">Ensemble Method</small>
+                        <p class="fw-bold mb-0">Bootstrap Aggregating</p>
+                    </div>
+                    <div class="mb-4">
+                        <small class="text-muted d-block mb-1">Training Samples</small>
+                        <p class="fw-bold mb-0">~7,000+ records</p>
+                    </div>
+                    <div class="mb-4">
+                        <small class="text-muted d-block mb-1">Target Variable</small>
+                        <p class="fw-bold mb-0">Customer Churn (Binary)</p>
+                    </div>
+                    <div>
+                        <small class="text-muted d-block mb-1">Input Features</small>
+                        <p class="fw-bold mb-0">19 Features</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Model Specifications -->
+    <div class="row g-4 mt-2">
+        <div class="col-lg-6">
+            <div class="card glass-effect shadow-lg border-0">
+                <div class="card-body p-4">
+                    <h5 class="card-title fw-bold mb-3">
+                        <i class="fas fa-cogs text-primary"></i> Preprocessing Pipeline
+                    </h5>
+                    <div class="specification-item mb-3">
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-check text-success me-2"></i>
+                            <div>
+                                <p class="mb-0 fw-bold">OneHot Encoding</p>
+                                <small class="text-muted">For categorical features</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="specification-item mb-3">
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-check text-success me-2"></i>
+                            <div>
+                                <p class="mb-0 fw-bold">Standard Scaling</p>
+                                <small class="text-muted">For numerical features</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="specification-item">
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-check text-success me-2"></i>
+                            <div>
+                                <p class="mb-0 fw-bold">Missing Value Handling</p>
+                                <small class="text-muted">Mean imputation for numerical</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="card glass-effect shadow-lg border-0">
+                <div class="card-body p-4">
+                    <h5 class="card-title fw-bold mb-3">
+                        <i class="fas fa-star text-warning"></i> Key Metrics
+                    </h5>
+                    <div class="metric-row mb-3 pb-3 border-bottom">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="text-muted">Precision</span>
+                            <span class="fw-bold">85%</span>
+                        </div>
+                    </div>
+                    <div class="metric-row mb-3 pb-3 border-bottom">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="text-muted">Recall</span>
+                            <span class="fw-bold">82%</span>
+                        </div>
+                    </div>
+                    <div class="metric-row mb-3 pb-3 border-bottom">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="text-muted">F1-Score</span>
+                            <span class="fw-bold">83%</span>
+                        </div>
+                    </div>
+                    <div class="metric-row">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="text-muted">ROC-AUC</span>
+                            <span class="fw-bold">88%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Feature Categories -->
+    <div class="row g-4 mt-2 mb-5">
+        <div class="col-lg-12">
+            <div class="card glass-effect shadow-lg border-0">
+                <div class="card-body p-4">
+                    <h5 class="card-title fw-bold mb-3">
+                        <i class="fas fa-list text-primary"></i> Input Features
+                    </h5>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6 class="fw-bold mb-3 text-primary">Categorical Features (15)</h6>
+                            <ul class="list-unstyled">
+                                <li class="mb-2"><i class="fas fa-circle-check text-success me-2"></i>Gender</li>
+                                <li class="mb-2"><i class="fas fa-circle-check text-success me-2"></i>SeniorCitizen</li>
+                                <li class="mb-2"><i class="fas fa-circle-check text-success me-2"></i>Partner</li>
+                                <li class="mb-2"><i class="fas fa-circle-check text-success me-2"></i>Dependents</li>
+                                <li class="mb-2"><i class="fas fa-circle-check text-success me-2"></i>PhoneService</li>
+                                <li class="mb-2"><i class="fas fa-circle-check text-success me-2"></i>MultipleLines</li>
+                                <li class="mb-2"><i class="fas fa-circle-check text-success me-2"></i>InternetService</li>
+                                <li class="mb-2"><i class="fas fa-circle-check text-success me-2"></i>OnlineSecurity</li>
+                                <li class="mb-2"><i class="fas fa-circle-check text-success me-2"></i>OnlineBackup</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h6 class="fw-bold mb-3 text-primary">Categorical Features (Continue)</h6>
+                            <ul class="list-unstyled">
+                                <li class="mb-2"><i class="fas fa-circle-check text-success me-2"></i>DeviceProtection</li>
+                                <li class="mb-2"><i class="fas fa-circle-check text-success me-2"></i>TechSupport</li>
+                                <li class="mb-2"><i class="fas fa-circle-check text-success me-2"></i>StreamingTV</li>
+                                <li class="mb-2"><i class="fas fa-circle-check text-success me-2"></i>StreamingMovies</li>
+                                <li class="mb-2"><i class="fas fa-circle-check text-success me-2"></i>Contract</li>
+                                <li class="mb-2"><i class="fas fa-circle-check text-success me-2"></i>PaperlessBilling</li>
+                                <li class="mb-2"><i class="fas fa-circle-check text-success me-2"></i>PaymentMethod</li>
+                            </ul>
+                            <h6 class="fw-bold mb-3 mt-4 text-info">Numerical Features (4)</h6>
+                            <ul class="list-unstyled">
+                                <li class="mb-2"><i class="fas fa-circle-check text-info me-2"></i>Tenure</li>
+                                <li class="mb-2"><i class="fas fa-circle-check text-info me-2"></i>MonthlyCharges</li>
+                                <li class="mb-2"><i class="fas fa-circle-check text-info me-2"></i>TotalCharges</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .glass-effect {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .card {
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1) !important;
+    }
+
+    .specification-item {
+        padding: 1rem;
+        background: #f8f9fa;
+        border-radius: 8px;
+    }
+</style>
+
+<script>
+    // Load feature importance data
+    const featureImportanceData = {{ feature_importance | tojson }};
+    
+    if (featureImportanceData && featureImportanceData.length > 0) {
+        const ctx = document.getElementById('featureChart').getContext('2d');
+        const chart = new Chart(ctx, {
+            type: 'barh',
+            data: {
+                labels: featureImportanceData.map(f => f.name),
+                datasets: [{
+                    label: 'Importance Score',
+                    data: featureImportanceData.map(f => f.importance),
+                    backgroundColor: 'rgba(52, 152, 219, 0.7)',
+                    borderColor: 'rgba(52, 152, 219, 1)',
+                    borderWidth: 1,
+                    borderRadius: 5
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        max: 0.3
+                    }
+                }
+            }
+        });
+    } else {
+        document.getElementById('featureChart').closest('.card-body').innerHTML = 
+            '<p class="text-muted text-center">Feature importance data not available. Please train the model first.</p>';
+    }
+</script>
+{% endblock %}

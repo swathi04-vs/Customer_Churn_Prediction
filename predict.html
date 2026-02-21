@@ -1,0 +1,443 @@
+{% extends "base.html" %}
+
+{% block title %}Prediction - Customer Churn Prediction{% endblock %}
+
+{% block content %}
+<div class="container-lg my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <!-- Header -->
+            <div class="mb-5">
+                <h1 class="display-5 fw-bold mb-2">
+                    <i class="fas fa-crystal-ball text-primary"></i> Churn Prediction
+                </h1>
+                <p class="text-muted lead">
+                    Enter customer details to predict the likelihood of churn
+                </p>
+            </div>
+
+            <!-- Prediction Form -->
+            <div class="card glass-effect shadow-lg border-0 mb-4">
+                <div class="card-body p-4">
+                    <form id="predictionForm">
+                        <!-- Demographics Section -->
+                        <div class="mb-4">
+                            <h5 class="fw-bold mb-3">
+                                <i class="fas fa-user text-primary"></i> Demographics
+                            </h5>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold">Gender</label>
+                                    <select class="form-select" name="gender" required>
+                                        <option value="">Select Gender</option>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold">Senior Citizen</label>
+                                    <select class="form-select" name="SeniorCitizen" required>
+                                        <option value="">Select</option>
+                                        <option value="0">No</option>
+                                        <option value="1">Yes</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold">Partner</label>
+                                    <select class="form-select" name="Partner" required>
+                                        <option value="">Select</option>
+                                        <option value="Yes">Yes</option>
+                                        <option value="No">No</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold">Dependents</label>
+                                    <select class="form-select" name="Dependents" required>
+                                        <option value="">Select</option>
+                                        <option value="Yes">Yes</option>
+                                        <option value="No">No</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Services Section -->
+                        <div class="mb-4">
+                            <h5 class="fw-bold mb-3">
+                                <i class="fas fa-wifi text-primary"></i> Services
+                            </h5>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold">Internet Service</label>
+                                    <select class="form-select" name="InternetService" required>
+                                        <option value="">Select</option>
+                                        <option value="DSL">DSL</option>
+                                        <option value="Fiber optic">Fiber optic</option>
+                                        <option value="No">No Internet Service</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold">Phone Service</label>
+                                    <select class="form-select" name="PhoneService" required>
+                                        <option value="">Select</option>
+                                        <option value="Yes">Yes</option>
+                                        <option value="No">No</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold">Multiple Lines</label>
+                                    <select class="form-select" name="MultipleLines" required>
+                                        <option value="">Select</option>
+                                        <option value="Yes">Yes</option>
+                                        <option value="No">No</option>
+                                        <option value="No phone service">No Phone Service</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold">Online Security</label>
+                                    <select class="form-select" name="OnlineSecurity" required>
+                                        <option value="">Select</option>
+                                        <option value="Yes">Yes</option>
+                                        <option value="No">No</option>
+                                        <option value="No internet service">No Internet Service</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold">Online Backup</label>
+                                    <select class="form-select" name="OnlineBackup" required>
+                                        <option value="">Select</option>
+                                        <option value="Yes">Yes</option>
+                                        <option value="No">No</option>
+                                        <option value="No internet service">No Internet Service</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold">Device Protection</label>
+                                    <select class="form-select" name="DeviceProtection" required>
+                                        <option value="">Select</option>
+                                        <option value="Yes">Yes</option>
+                                        <option value="No">No</option>
+                                        <option value="No internet service">No Internet Service</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold">Tech Support</label>
+                                    <select class="form-select" name="TechSupport" required>
+                                        <option value="">Select</option>
+                                        <option value="Yes">Yes</option>
+                                        <option value="No">No</option>
+                                        <option value="No internet service">No Internet Service</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold">Streaming TV</label>
+                                    <select class="form-select" name="StreamingTV" required>
+                                        <option value="">Select</option>
+                                        <option value="Yes">Yes</option>
+                                        <option value="No">No</option>
+                                        <option value="No internet service">No Internet Service</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold">Streaming Movies</label>
+                                    <select class="form-select" name="StreamingMovies" required>
+                                        <option value="">Select</option>
+                                        <option value="Yes">Yes</option>
+                                        <option value="No">No</option>
+                                        <option value="No internet service">No Internet Service</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Account Section -->
+                        <div class="mb-4">
+                            <h5 class="fw-bold mb-3">
+                                <i class="fas fa-credit-card text-primary"></i> Account Information
+                            </h5>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold">Tenure (months)</label>
+                                    <input type="number" class="form-control" name="tenure" min="0" max="100" required>
+                                    <small class="text-muted">0-100 months</small>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold">Contract</label>
+                                    <select class="form-select" name="Contract" required>
+                                        <option value="">Select</option>
+                                        <option value="Month-to-month">Month-to-month</option>
+                                        <option value="One year">One year</option>
+                                        <option value="Two year">Two year</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold">Monthly Charges ($)</label>
+                                    <input type="number" class="form-control" name="MonthlyCharges" step="0.01" min="0" max="10000" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold">Total Charges ($)</label>
+                                    <input type="number" class="form-control" name="TotalCharges" step="0.01" min="0" max="100000" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold">Paperless Billing</label>
+                                    <select class="form-select" name="PaperlessBilling" required>
+                                        <option value="">Select</option>
+                                        <option value="Yes">Yes</option>
+                                        <option value="No">No</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold">Payment Method</label>
+                                    <select class="form-select" name="PaymentMethod" required>
+                                        <option value="">Select</option>
+                                        <option value="Electronic check">Electronic check</option>
+                                        <option value="Mailed check">Mailed check</option>
+                                        <option value="Bank transfer (automatic)">Bank transfer (automatic)</option>
+                                        <option value="Credit card (automatic)">Credit card (automatic)</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary btn-lg fw-bold">
+                                <i class="fas fa-magic"></i> Predict Churn
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Loading Spinner -->
+            <div id="loadingSpinner" class="text-center d-none">
+                <div class="spinner-border text-primary mb-3" role="status" style="width: 3rem; height: 3rem;">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <p class="text-muted">Analyzing customer data...</p>
+            </div>
+
+            <!-- Prediction Result -->
+            <div id="resultContainer" class="d-none">
+                <div class="card glass-effect shadow-lg border-0">
+                    <div class="card-body p-4">
+                        <h5 class="card-title fw-bold mb-4">
+                            <i class="fas fa-check-circle text-success"></i> Prediction Result
+                        </h5>
+                        
+                        <div class="row g-4">
+                            <!-- Churn Status -->
+                            <div class="col-md-6">
+                                <div class="result-box p-3 rounded-3" id="churnStatusBox">
+                                    <p class="text-muted small mb-1">Churn Status</p>
+                                    <h6 id="churnStatus" class="fw-bold mb-0"></h6>
+                                </div>
+                            </div>
+
+                            <!-- Risk Level -->
+                            <div class="col-md-6">
+                                <div class="result-box p-3 rounded-3" id="riskLevelBox">
+                                    <p class="text-muted small mb-1">Risk Level</p>
+                                    <h6 id="riskLevel" class="fw-bold mb-0"></h6>
+                                </div>
+                            </div>
+
+                            <!-- Probability -->
+                            <div class="col-md-6">
+                                <div class="result-box p-3 rounded-3">
+                                    <p class="text-muted small mb-1">Churn Probability</p>
+                                    <h6 id="probability" class="fw-bold mb-0"></h6>
+                                </div>
+                            </div>
+
+                            <!-- Confidence -->
+                            <div class="col-md-6">
+                                <div class="result-box p-3 rounded-3">
+                                    <p class="text-muted small mb-1">Confidence Score</p>
+                                    <h6 id="confidence" class="fw-bold mb-0"></h6>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Progress Bar -->
+                        <div class="mt-4">
+                            <p class="text-muted small mb-2">Prediction Strength</p>
+                            <div class="progress" style="height: 25px;">
+                                <div id="progressBar" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"></div>
+                            </div>
+                        </div>
+
+                        <div class="mt-4">
+                            <button type="button" class="btn btn-outline-primary" onclick="location.reload();">
+                                <i class="fas fa-redo"></i> Make Another Prediction
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Error Message -->
+            <div id="errorContainer" class="alert alert-danger d-none" role="alert">
+                <h6 class="alert-heading">
+                    <i class="fas fa-exclamation-circle"></i> Error
+                </h6>
+                <p id="errorMessage" class="mb-0"></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .glass-effect {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+    }
+
+    .result-box {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        border-left: 4px solid #3498db;
+    }
+
+    .result-box.success {
+        border-left-color: #27ae60;
+    }
+
+    .result-box.danger {
+        border-left-color: #e74c3c;
+    }
+
+    .form-select, .form-control {
+        border-radius: 8px;
+        border: 1px solid #e0e0e0;
+    }
+
+    .form-select:focus, .form-control:focus {
+        border-color: #3498db;
+        box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+    }
+</style>
+
+<script>
+document.getElementById('predictionForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    // Get form data
+    const formData = new FormData(this);
+    const data = Object.fromEntries(formData);
+    
+    // Show loading
+    document.getElementById('loadingSpinner').classList.remove('d-none');
+    document.getElementById('resultContainer').classList.add('d-none');
+    document.getElementById('errorContainer').classList.add('d-none');
+    
+    try {
+        const response = await fetch('/api/predict', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+        
+        const result = await response.json();
+        
+        if (response.ok) {
+            displayResult(result);
+        } else {
+            showError(result.message || 'An error occurred during prediction');
+        }
+    } catch (error) {
+        showError('Failed to connect to the server: ' + error.message);
+    } finally {
+        document.getElementById('loadingSpinner').classList.add('d-none');
+    }
+});
+
+function displayResult(result) {
+    // Validate result structure - check for required fields
+    if (!result || result.churn_probability === undefined || result.confidence_score === undefined) {
+        console.error('Invalid response structure:', result);
+        showError('Invalid response from server');
+        return;
+    }
+    
+    // Destructure response fields (backend already converted to percentage)
+    const churnProbability = result.churn_probability;  // Already 0-100%
+    const confidenceScore = result.confidence_score;     // Already 0-100%
+    const prediction = result.prediction;                // "Churn" or "No Churn"
+    const riskLevel = result.risk_level;                 // "Low", "Medium", or "High"
+    
+    // Validate all fields exist
+    if (!prediction || !riskLevel) {
+        console.error('Missing prediction or risk_level in response:', result);
+        showError('Invalid response from server');
+        return;
+    }
+    
+    // Validate values are in valid range
+    if (churnProbability < 0 || churnProbability > 100) {
+        console.error(`Invalid churn probability: ${churnProbability}%`);
+        showError('Invalid probability calculation');
+        return;
+    }
+    
+    // Update result display elements
+    document.getElementById('churnStatus').textContent = prediction;
+    document.getElementById('riskLevel').textContent = riskLevel;
+    
+    // Display probability and confidence WITHOUT multiplying by 100 again
+    // Backend already provided values as percentages
+    document.getElementById('probability').textContent = churnProbability.toFixed(2) + '%';
+    document.getElementById('confidence').textContent = confidenceScore.toFixed(2) + '%';
+    
+    // Update progress bar with confidence score
+    const progressBar = document.getElementById('progressBar');
+    progressBar.style.width = confidenceScore + '%';
+    progressBar.setAttribute('aria-valuenow', confidenceScore);
+    
+    // Update color based on prediction (Churn vs No Churn)
+    const statusBox = document.getElementById('churnStatusBox');
+    const riskBox = document.getElementById('riskLevelBox');
+    
+    // Determine color based on prediction
+    const isChurn = prediction === 'Churn';
+    
+    if (isChurn) {
+        // Red for churn
+        statusBox.classList.remove('success');
+        statusBox.classList.add('danger');
+        statusBox.querySelector('h6').style.color = '#e74c3c';
+        
+        riskBox.classList.remove('success');
+        riskBox.classList.add('danger');
+        riskBox.querySelector('h6').style.color = '#e74c3c';
+        
+        progressBar.classList.remove('bg-success');
+        progressBar.classList.add('bg-danger');
+    } else {
+        // Green for no churn
+        statusBox.classList.remove('danger');
+        statusBox.classList.add('success');
+        statusBox.querySelector('h6').style.color = '#27ae60';
+        
+        riskBox.classList.remove('danger');
+        riskBox.classList.add('success');
+        riskBox.querySelector('h6').style.color = '#27ae60';
+        
+        progressBar.classList.remove('bg-danger');
+        progressBar.classList.add('bg-success');
+    }
+    
+    // Show result container
+    document.getElementById('resultContainer').classList.remove('d-none');
+    
+    // Log for debugging
+    console.log(`Prediction: ${prediction} | Churn Prob: ${churnProbability}% | Confidence: ${confidenceScore}% | Risk: ${riskLevel}`);
+}
+
+function showError(message) {
+    document.getElementById('errorMessage').textContent = message;
+    document.getElementById('errorContainer').classList.remove('d-none');
+}
+</script>
+{% endblock %}
