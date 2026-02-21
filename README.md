@@ -296,10 +296,6 @@ python model/train_model.py
 - [ ] A/B testing framework
 - [ ] Advanced analytics dashboard
 
-## 📝 License
-
-This project is open source and available under the MIT License.
-
 ## 👨‍💻 Author
 
 Customer Churn Prediction System - Built with Flask, Scikit-learn, and Modern Web Technologies
